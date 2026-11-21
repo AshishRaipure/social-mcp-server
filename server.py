@@ -1,14 +1,23 @@
 import os
+from mcp.server.fastmcp import FastMCP
+
+# Render injects the PORT environment variable (usually 10000)
+PORT = int(os.getenv("PORT", 8000))
+
+# Must listen on 0.0.0.0 so Render can forward public traffic
+mcp = FastMCP("Social Publisher MCP", host="0.0.0.0", port=PORT)
+
+#import os
 import time
 import requests
-from mcp.server.fastmcp import FastMCP
+#from mcp.server.fastmcp import FastMCP
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
 # Render assigns a dynamic port via the PORT environment variable
-PORT = int(os.getenv("PORT", 8000))
-mcp = FastMCP("Social Publisher MCP", host="0.0.0.0", port=PORT)
+#PORT = int(os.getenv("PORT", 8000))
+#mcp = FastMCP("Social Publisher MCP", host="0.0.0.0", port=PORT)
 
 # --- ENVIRONMENT VARIABLES ---
 YT_CLIENT_ID = os.getenv("YT_CLIENT_ID", "")
