@@ -126,9 +126,14 @@ def post_instagram_reel(video_url: str, caption: str) -> str:
 @mcp.tool()
 def submit_to_content_rewards(post_url: str, platform: str) -> str:
     """Submits a live YouTube or Instagram link to the Content Rewards campaign within the 30-min window."""
+    api_key = os.getenv("CONTENT_REWARDS_API_KEY", "").strip()
+    campaign_id = os.getenv("CONTENT_REWARDS_CAMPAIGN_ID", "").strip()
+    # Automatically strip 'Bearer ' if it was included in the environment variable
+    if api_key.lower().startswith("bearer "):
+        api_key = api_key[7:].strip()
     endpoint = "https://api.contentrewards.com/v1/submissions"
     headers = {
-        "Authorization": f"Bearer {CR_API_KEY}",
+        "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
     }
     payload = {
